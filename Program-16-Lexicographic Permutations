@@ -1,0 +1,29 @@
+//This problem requires finding the millionth lexicographic permutation of the digits 0 to 9.
+#include <stdio.h>
+
+void lexicographic_permutations() {
+    int digits[] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+    int n = 10, count = 1;
+    while (count < 1000000) {
+        int i = n - 2;
+        while (digits[i] >= digits[i + 1]) i--;
+        int j = n - 1;
+        while (digits[i] >= digits[j]) j--;
+        int temp = digits[i];
+        digits[i] = digits[j];
+        digits[j] = temp;
+        for (int k = i + 1, l = n - 1; k < l; k++, l--) {
+            temp = digits[k];
+            digits[k] = digits[l];
+            digits[l] = temp;
+        }
+        count++;
+    }
+    for (int i = 0; i < n; i++) printf("%d", digits[i]);
+    printf("\n");
+}
+
+int main() {
+    lexicographic_permutations();
+    return 0;
+}
