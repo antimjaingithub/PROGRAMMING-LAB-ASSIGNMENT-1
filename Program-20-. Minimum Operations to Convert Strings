@@ -1,0 +1,28 @@
+// find the minimum number of operations required to convert one string into another.
+#include <stdio.h>
+#include <string.h>
+#include <math.h>
+
+void min_operations_to_convert() {
+    char s[100], t[100];
+    scanf("%s%s", s, t);
+    int ls = strlen(s), lt = strlen(t);
+    int dp[ls + 1][lt + 1];
+    for (int i = 0; i <= ls; i++) dp[i][0] = i;
+    for (int i = 0; i <= lt; i++) dp[0][i] = i;
+    for (int i = 1; i <= ls; i++) {
+        for (int j = 1; j <= lt; j++) {
+            if (s[i - 1] == t[j - 1])
+                dp[i][j] = dp[i - 1][j - 1];
+            else
+                dp[i][j] = 1 + fmin(dp[i - 1][j], fmin(dp[i][j - 1], dp[i - 1][j - 1]));
+        }
+    }
+    printf("%d\n", dp[ls][lt]);
+}
+
+int main() {
+    printf("Enter two strings:\n");
+    min_operations_to_convert();
+    return 0;
+}
