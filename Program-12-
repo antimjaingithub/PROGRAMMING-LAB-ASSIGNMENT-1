@@ -1,0 +1,105 @@
+#include <stdio.h>
+
+void print_set(int set[], int size) {
+    printf("{ ");
+    for (int i = 0; i < size; i++) {
+        printf("%d ", set[i]);
+    }
+    printf("}\n");
+}
+
+void union_set(int A[], int sizeA, int B[], int sizeB, int result[], int* sizeResult) {
+    int i, j, k = 0;
+    for (i = 0; i < sizeA; i++) {
+        result[k++] = A[i];
+    }
+    for (i = 0; i < sizeB; i++) {
+        for (j = 0; j < sizeA; j++) {
+            if (B[i] == A[j]) {
+                break;
+            }
+        }
+        if (j == sizeA) {
+            result[k++] = B[i];
+        }
+    }
+    *sizeResult = k;
+}
+
+void intersection_set(int A[], int sizeA, int B[], int sizeB, int result[], int* sizeResult) {
+    int i, j, k = 0;
+    for (i = 0; i < sizeA; i++) {
+        for (j = 0; j < sizeB; j++) {
+            if (A[i] == B[j]) {
+                result[k++] = A[i];
+                break;
+            }
+        }
+    }
+    *sizeResult = k;
+}
+
+void difference_set(int A[], int sizeA, int B[], int sizeB, int result[], int* sizeResult) {
+    int i, j, k = 0;
+    for (i = 0; i < sizeA; i++) {
+        for (j = 0; j < sizeB; j++) {
+            if (A[i] == B[j]) {
+                break;
+            }
+        }
+        if (j == sizeB) {
+            result[k++] = A[i];
+        }
+    }
+    *sizeResult = k;
+}
+
+void symmetric_difference_set(int A[], int sizeA, int B[], int sizeB, int result[], int* sizeResult) {
+    int temp[1000], sizeTemp;
+    difference_set(A, sizeA, B, sizeB, temp, &sizeTemp);
+    difference_set(B, sizeB, A, sizeA, result, sizeResult);
+    for (int i = 0; i < sizeTemp; i++) {
+        result[(*sizeResult)++] = temp[i];
+    }
+}
+
+int main() {
+    int n, m;
+    printf("Enter the sizes of sets A and B: ");
+    scanf("%d %d", &n, &m);
+
+    int A[n], B[m];
+    printf("Enter the elements of set A: ");
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &A[i]);
+    }
+    printf("Enter the elements of set B: ");
+    for (int i = 0; i < m; i++) {
+        scanf("%d", &B[i]);
+    }
+
+    int union_result[n + m], union_size;
+    union_set(A, n, B, m, union_result, &union_size);
+    printf("Union: ");
+    print_set(union_result, union_size);
+
+    int intersection_result[n + m], intersection_size;
+    intersection_set(A, n, B, m, intersection_result, &intersection_size);
+    printf("Intersection: ");
+    print_set(intersection_result, intersection_size);
+
+    int diff_A_B[n + m], diff_A_B_size, diff_B_A[m + n], diff_B_A_size;
+    difference_set(A, n, B, m, diff_A_B, &diff_A_B_size);
+    difference_set(B, m, A, n, diff_B_A, &diff_B_A_size);
+    printf("Difference A\\ B: ");
+    print_set(diff_A_B, diff_A_B_size);
+    printf("Difference B\\ A: ");
+    print_set(diff_B_A, diff_B_A_size);
+
+    int sym_diff_result[n + m], sym_diff_size;
+    symmetric_difference_set(A, n, B, m, sym_diff_result, &sym_diff_size);
+    printf("Symmetric difference: ");
+    print_set(sym_diff_result, sym_diff_size);
+
+    return 0;
+}
