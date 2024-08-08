@@ -1,0 +1,37 @@
+//C program that takes n distinct integers as input and stores them in an array 
+//such that every ith (0 ≤ i ≤ (n-1)) element in the array is bigger than 2*(i+1)th 
+//and (2*(i+1)+1)th elements. 
+#include <stdio.h>
+
+int main() {
+    int n;
+    printf("Enter the size of the array: ");
+    scanf("%d", &n);
+
+    int arr[n];
+    printf("Enter the elements of the array: ");
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &arr[i]);
+    }
+
+    for (int i = 0; i < n; i++) {
+        int index1 = 2 * (i + 1) - 1;
+        int index2 = 2 * (i + 1);
+        if (index1 < n && index2 < n) {
+            while (arr[i] <= arr[index1] || arr[i] <= arr[index2]) {
+                int temp = arr[i];
+                arr[i] = arr[index1] > arr[index2] ? arr[index1] : arr[index2];
+                arr[index1 < n ? index1 : i] = temp;
+                arr[index2 < n ? index2 : i] = temp;
+            }
+        }
+    }
+
+    printf("The array: ");
+    for (int i = 0; i < n; i++) {
+        printf("%d ", arr[i]);
+    }
+    printf("\n");
+
+    return 0;
+}
