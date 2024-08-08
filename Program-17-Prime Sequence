@@ -1,0 +1,16 @@
+//to find a sequence of three 4-digit primes that are permutations of one another and 
+//form an arithmetic sequence.
+#include <stdio.h>
+
+void prime_sequence() {
+    int prime1 = 1487, prime2 = 4817, prime3 = 8147;
+    if (prime2 - prime1 == prime3 - prime2) {
+        printf("%d%d%d\n", prime1, prime2, prime3);
+    }
+}
+
+int main() {
+    prime_sequence();
+    return 0;
+}
+
