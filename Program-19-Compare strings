@@ -1,0 +1,17 @@
+//This problem involves comparing two strings to determine if they are identical.
+#include <stdio.h>
+#include <string.h>
+
+void compare_strings() {
+    char str1[100], str2[100];
+    scanf("%s%s", str1, str2);
+    printf(strcmp(str1, str2) == 0 ? "same\n" : "not same\n");
+}
+
+int main() {
+    printf("Enter two strings:\n");
+    compare_strings();
+    return 0;
+}
+
+
