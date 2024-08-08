@@ -1,0 +1,31 @@
+//C program to calculate the SUM of the following series for a given x and n; where, −1 < x ≤ 1, 
+//n > 100,SUM = x - x^2/2 + x^3/3 - x^4/4 + ... upto nth term.
+#include <stdio.h>
+#include <math.h>
+
+double series_sum(double x, int n) {
+    double sum = 0.0;
+    int sign = 1;
+    for (int i = 1; i <= n; i++) {
+        sum += sign * pow(x, i) / i;
+        sign *= -1;
+    }
+    return sum;
+}
+
+int main() {
+    double x;
+    int n;
+    printf("Enter the value of x (-1 < x <= 1) and n (n > 100): ");
+    scanf("%lf %d", &x, &n);
+
+    if (x <= -1 || x > 1 || n <= 100) {
+        printf("Invalid input.\n");
+        return 1;
+    }
+
+    double result = series_sum(x, n);
+    printf("The sum of the series is: %.6f\n", result);
+
+    return 0;
+}
