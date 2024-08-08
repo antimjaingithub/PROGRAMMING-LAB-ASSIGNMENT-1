@@ -1,0 +1,22 @@
+// to find the frequency of a given keyword in a text.
+#include <stdio.h>
+#include <string.h>
+
+void term_frequency() {
+    char str[1000], keyword[100], *token;
+    int count = 0;
+    fgets(str, 1000, stdin);
+    scanf("%s", keyword);
+    token = strtok(str, " ,.");
+    while (token != NULL) {
+        if (strcmp(token, keyword) == 0) count++;
+        token = strtok(NULL, " ,.");
+    }
+    printf("%d\n", count);
+}
+
+int main() {
+    printf("Enter text: ");
+    term_frequency();
+    return 0;
+}
